@@ -1,2 +1,3 @@
 /node_modules
-DB_secrets
+config.env
+*.env
