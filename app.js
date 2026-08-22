@@ -12,9 +12,11 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+// التعديل هنا: استخدام process.cwd() لضمان الوصول للمجلد الرئيسي
+app.use(express.static(path.join(process.cwd(), 'public')));
 
 app.use((req, res, next) => {
+  req.body = req.body || {};
   req.body.timestamp = new Date().toISOString();
   next();
 });
@@ -29,7 +31,8 @@ app.use('/api/v1', router);
 
 // 4. الصفحة الرئيسية
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  // التعديل هنا أيضاً
+  res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
 });
 
 // 5. التصدير لـ Vercel
